@@ -3,32 +3,33 @@ package com.codet.caseidilia.selenide;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Driver;
 import org.junit.FixMethodOrder;
 import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import javax.swing.*;
 import java.util.Random;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Tests {
     String loginReg = "prod-test-loupa" + new Random().nextInt();
-//    String login = "prod-test-loupa1241228565";
+    //    String login = "prod-test-loupa1241228565";
     String login = "poupa";
 
 
     private void init() {
         // very generic. such development wow
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\User\\Dropbox\\8sem\\masl\\selenium-caseidilia\\src\\main\\resources\\chrome\\chromedriver.exe");
-        System.setProperty("selenide.browser", "Chrome");
+        System.setProperty("webdriver.gecko.driver", "/home/alexandr/chromedriver/geckodriver");
+        System.setProperty("selenide.browser", "firefox");
     }
 
     //Проверяет элементы и валидацию на странице логина
@@ -125,6 +126,7 @@ public class Tests {
     @Test
     @Order(5)
     public void menuCheckItems() {
+        init();
         open("http://localhost:4200/messenger?login=" + login);
         $(By.xpath("/html/body/app-root/app-messenger/div/app-contact-list/button")).click();
         $(By.xpath("//*[contains(text(), 'Settings')]")).click();
@@ -143,7 +145,8 @@ public class Tests {
         $(By.xpath("/html/body/app-root/app-messenger/div/app-contact-list/button")).click();
         $(By.xpath("//*[contains(text(), 'Invite')]")).click();
         $(By.xpath("//*[contains(text(), 'Generate')]")).click();
-        $(By.xpath("/html")).pressEscape();
+        actions().sendKeys(Keys.ESCAPE).perform();
+
 
 
         $(By.xpath("/html/body/app-root/app-messenger/div/app-contact-list/button")).click();
@@ -158,7 +161,7 @@ public class Tests {
 
         $(By.xpath("/html/body/app-root/app-messenger/div/app-contact-list/button")).click();
         $(By.xpath("//*[contains(text(), 'Help')]")).click();
-        $(By.xpath("/html")).pressEscape();
+        actions().sendKeys(Keys.ESCAPE).perform();
 
         $(By.xpath("/html/body/app-root/app-messenger/div/app-contact-list/button")).click();
         $(By.xpath("//*[contains(text(), 'Log out')]")).click();
